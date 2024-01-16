@@ -7,7 +7,7 @@ const cors = require("cors");
 let db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "root",
+    password: "davido2020",
     database: "contacts",
 });
 
@@ -47,8 +47,13 @@ app.get("/", (req, res) => {
 app.get("/api/get", (req, res) => {
 
     const sqlGet = "SELECT * from contact_db";
-    db.query(sqlGet, (err, result) => {
-        res.send(result)
+    db.query(sqlGet, (error, result) => {
+        if (error) {
+            console.log(error);
+        } else {
+            // res.send(result)
+            res.send({Message: "All users in database are: ", result})
+        }
     })
 })
 
@@ -56,8 +61,13 @@ app.post("/api/post", (req, res) => {
     const { name, email, contact } = req.body;
     const sqlInsert = "INSERT INTO contact_db(name, email, contact) VALUES(?,?,?)";
     db.query(sqlInsert, [name, email, contact], (error, result) => {
-        if (error)
+        const Message = "User Created!"
+        if (error) {
             console.log(error);
+        } else {
+            res.send({Message})
+            console.log(Message);
+        }
     })
 })
 
@@ -65,8 +75,11 @@ app.delete("/api/remove/:id", (req, res) => {
     const { id } = req.params;
     const sqlRemove = "DELETE FROM contact_db WHERE id=?";
     db.query(sqlRemove, id, (error, result) => {
-        if (error)
+        if (error){
             console.log(error);
+        } else {
+            res.send({Mesage: `Deleted user with id of ${id}`});
+        }
     })
 })
 
@@ -84,10 +97,12 @@ app.put("/api/update/:id", (req, res) => {
     const { id } = req.params;
     const { name, email, contact } = req.body;
     const sqlUpdate = "UPDATE contact_db SET name= ?, email= ?, contact= ? WHERE id=?";
-    db.query(sqlUpdate, [name, email, contact, id], (err, result) => {
-        if (err)
-            console.log(err);
-        res.send(result)
+    db.query(sqlUpdate, [name, email, contact, id], (error, result) => {
+        if (error){
+            console.log(error);
+        } else {
+            res.send({result, Mesage: `Updated user with id of ${id}`});
+        }
     })
 })
 
