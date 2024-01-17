@@ -3,12 +3,13 @@ const app = express();
 const bodyParser = require("body-parser");
 const mysql = require("mysql2");
 const cors = require("cors");
+require("dotenv").config({ path: ".env.development.local"});
 
 let db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "davido2020",
-    database: "contacts",
+    host: process.env.HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE
 });
 
 db.connect((err) => {
@@ -41,7 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get("/", (req, res) => {
-    res.json("Testing Node.js Server")
+    res.json("Testing Node.js Server");
 });
 
 app.get("/api/get", (req, res) => {
