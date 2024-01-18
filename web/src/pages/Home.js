@@ -1,8 +1,8 @@
-import {Link} from 'react-router-dom'
-import React, {useEffect,useState} from 'react'
-import './Home.css'
-import axios from 'axios'
-import { toast } from 'react-toastify'
+import {Link} from 'react-router-dom';
+import React, {useEffect,useState} from 'react';
+import './Home.css';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -17,7 +17,7 @@ const Home = () => {
 
   const loadData = async () =>{
     const response = await axios.get("http://localhost:5000/api/get");
-    setData(response.data);
+    setData(response.data.result);
   }
 
   useEffect (() =>{
@@ -39,7 +39,7 @@ const Home = () => {
       </Link>
       <TableContainer component={Paper} className="styled-table">
         <Table  aria-label="caption table">
-          <caption>Contact data in database</caption>
+          <caption>Contact data inner database</caption>
           <TableHead>
             <TableRow>
               <TableCell align="center">No.</TableCell>
@@ -75,4 +75,3 @@ const Home = () => {
 }
 
 export default Home
-
