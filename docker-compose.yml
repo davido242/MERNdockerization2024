@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  mysql_srv:
+    image: mysql:8.0
+    container_name: mysql_ctr
+    stdin_open: true
+    restart: always
+    environment:
+      - MYSQL_DATABASE: contacts
+      - MYSQL__ROOT_PASSWORD: process.env.PASSWORD
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./conf:/etc/mysql/conf.d
+      - ./logs:/logs
