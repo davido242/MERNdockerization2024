@@ -6,7 +6,8 @@ const cors = require("cors");
 require("dotenv").config({ path: ".env.development.local"});
 
 let db = mysql.createConnection({
-    host: process.env.HOST,
+    host: "mysql_srv",
+    // host: process.env.HOST,
     user: process.env.DATABASE_USER,
     password: process.env.PASSWORD,
     database: process.env.DATABASE

@@ -14,6 +14,7 @@ services:
       - ./data:/var/lib/mysql
       - ./conf:/etc/mysql/conf.d
       - ./logs:/logs
+
   phpmyadmin_srv:
     depends_on:
       - mysql_srv
@@ -24,3 +25,18 @@ services:
       PMA_HOST: mysql_srv
     ports:
       -8080:80
+
+  backend_svr:
+    build:
+      context: ./api
+    depends_on:
+      - mysql_srv
+    environment:
+      MYSQL_HOST_IP: mysql_srv
+      MYSQL_USER: root
+      MYSQL_DATABASE: contacts
+      MYSQL_PASSWORD: root
+    ports:
+      -5000:5000
+    volumes:
+      - ./api:/api
