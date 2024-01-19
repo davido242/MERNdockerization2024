@@ -6,8 +6,8 @@ services:
     stdin_open: true
     restart: always
     environment:
-      - MYSQL_DATABASE: contacts
-      - MYSQL__ROOT_PASSWORD: process.env.PASSWORD
+      MYSQL_DATABASE: contacts
+      MYSQL__ROOT_PASSWORD: root
     ports:
       - "3307:3306"
     volumes:
@@ -19,12 +19,12 @@ services:
     depends_on:
       - mysql_srv
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin_ctr
+    container_name: phpadmin_ctr
     restart: always
     environment:
       PMA_HOST: mysql_srv
     ports:
-      -8080:80
+      - "8080:80"
 
   backend_svr:
     build:
@@ -37,13 +37,17 @@ services:
       MYSQL_DATABASE: contacts
       MYSQL_PASSWORD: root
     ports:
-      -5000:5000
+      - "5000:5000"
     volumes:
       - ./api:/api
   frontend_srv:
     build:
-    context: ./web
+      context: ./web
     ports:
-      -3000:80
+      - "3000:80"
     volumes:
       - ./web:/web
+      
+volumes:
+  mysql_srv:
+    driver: local
