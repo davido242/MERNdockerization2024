@@ -14,3 +14,13 @@ services:
       - ./data:/var/lib/mysql
       - ./conf:/etc/mysql/conf.d
       - ./logs:/logs
+  phpmyadmin_srv:
+    depends_on:
+      - mysql_srv
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_ctr
+    restart: always
+    environment:
+      PMA_HOST: mysql_srv
+    ports:
+      -8080:80
