@@ -40,3 +40,10 @@ services:
       -5000:5000
     volumes:
       - ./api:/api
+  frontend_srv:
+    build:
+    context: ./web
+    ports:
+      -3000:80
+    volumes:
+      - ./web:/web
